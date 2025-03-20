@@ -4,7 +4,7 @@ import numpy as np
 import cv2
 import os
 import glob
-from ..hardware import CameraD435
+from ..camera import CameraD435
 def take_photo(save_dir):
     """
     使用d435拍照
