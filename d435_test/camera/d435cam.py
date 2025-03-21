@@ -221,7 +221,7 @@ if __name__=="__main__":
     输出depth流
     """
     # cam=CameraD435()
-    # cam.enable_stream(rs.stream.depth, 1280,720, rs.format.z16, 30)
+    # cam.enable_stream(rs.stream.depth, 640,480, rs.format.z16, 30)
     # cam.start()
     # try:
     #     while True:
@@ -239,44 +239,44 @@ if __name__=="__main__":
     """
     使用open3d渲染实时点云
     """
-    # cam=CameraD435()
-    # cam.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
-    # cam.enable_stream(rs.stream.color, 1280, 720, rs.format.bgr8, 30)
-    # cam.start()
-    # # 创建Open3D可视化窗口
-    # vis = o3d.visualization.Visualizer()
-    # vis.create_window()
-    # pcd = o3d.geometry.PointCloud()
-    # first_iter = True
-    # try:
-    #     while True:
-    #         start_time = time.time()
-    #         points,colors=cam.get_point_and_color()
-    #         # 更新点云数据
-    #         pcd.points = o3d.utility.Vector3dVector(points)
-    #         pcd.colors = o3d.utility.Vector3dVector(colors)
-    #         # 首次迭代设置视角
-    #         if first_iter:
-    #             vis.add_geometry(pcd)
-    #             first_iter = False
-    #         else:
-    #             vis.update_geometry(pcd)
+    cam=CameraD435()
+    cam.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
+    cam.enable_stream(rs.stream.color, 1280, 720, rs.format.bgr8, 30)
+    cam.start()
+    # 创建Open3D可视化窗口
+    vis = o3d.visualization.Visualizer()
+    vis.create_window()
+    pcd = o3d.geometry.PointCloud()
+    first_iter = True
+    try:
+        while True:
+            start_time = time.time()
+            points,colors=cam.get_point_and_color()
+            # 更新点云数据
+            pcd.points = o3d.utility.Vector3dVector(points)
+            pcd.colors = o3d.utility.Vector3dVector(colors)
+            # 首次迭代设置视角
+            if first_iter:
+                vis.add_geometry(pcd)
+                first_iter = False
+            else:
+                vis.update_geometry(pcd)
             
-    #         # 更新渲染
-    #         vis.poll_events()
-    #         vis.update_renderer()
+            # 更新渲染
+            vis.poll_events()
+            vis.update_renderer()
 
-    #         # 计算并显示帧率
-    #         fps = 1 / (time.time() - start_time)
-    #         print(f"FPS: {fps:.2f}", end='\r')
+            # 计算并显示帧率
+            fps = 1 / (time.time() - start_time)
+            print(f"FPS: {fps:.2f}", end='\r')
 
-    #         # 按ESC退出
-    #         if cv2.waitKey(1) == 27:
-    #             break
-    # finally:
-    #     cam.stop()
-    #     vis.destroy_window()
-    #     cv2.destroyAllWindows()
+            # 按ESC退出
+            if cv2.waitKey(1) == 27:
+                break
+    finally:
+        cam.stop()
+        vis.destroy_window()
+        cv2.destroyAllWindows()
     """
     打开实时rgb流,并检查鼠标所在像素点的距离rgb_frame
     """

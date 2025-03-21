@@ -23,7 +23,6 @@ def calibrate_extrinsic_bysolvepnp(chessboard_picpath: str, chessboard_size: Tup
     
     # 加载棋盘格照片
     images_path_list = glob.glob(chessboard_picpath + '/*.jpg')
-    print(images_path_list)
     def sort_key(fname):
         # 提取文件名中的数字部分
         import re
@@ -32,7 +31,6 @@ def calibrate_extrinsic_bysolvepnp(chessboard_picpath: str, chessboard_size: Tup
             return int(match.group(1))
         return 0
     images_path_list.sort(key=sort_key)
-    print(images_path_list)
     # 准备世界坐标点
     p_world = np.zeros((chessboard_size[0] * chessboard_size[1], 3), np.float32)
     p_world[:, :2] = np.mgrid[0:chessboard_size[0], 0:chessboard_size[1]].T.reshape(-1, 2) * chessboard_size[2]
