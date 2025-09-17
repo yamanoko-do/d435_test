@@ -3,4 +3,4 @@ from .pnpCheckchessboard import pnp_Checkchessboard
 from .solvepnp import calibrate_extrinsic_bysolvepnp
 from .singlecalibration import calibrate_intrinsic
 from .eye2handcalibration import eye2hand_calibration
-from .eye2handcollect import eye2hand_collect
+from .eye2handcollect import eye2hand_collect_dobot, eye2hand_collect_piper

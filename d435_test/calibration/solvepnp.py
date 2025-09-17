@@ -34,7 +34,7 @@ def calibrate_extrinsic_bysolvepnp(chessboard_picpath: str, chessboard_size: Tup
     # 准备世界坐标点
     p_world = np.zeros((chessboard_size[0] * chessboard_size[1], 3), np.float32)
     p_world[:, :2] = np.mgrid[0:chessboard_size[0], 0:chessboard_size[1]].T.reshape(-1, 2) * chessboard_size[2]
-    # print(p_world)
+    #print(p_world)
 
     # 读取相机内参和畸变系数（假设已标定）
     # 这里需要你提供相机内参矩阵 mtx 和畸变系数 dist
@@ -43,7 +43,7 @@ def calibrate_extrinsic_bysolvepnp(chessboard_picpath: str, chessboard_size: Tup
     dist = np.zeros((5, 1), dtype=np.float32)  # 假设无畸变
     
     r_matrix_list, tvecs_list = [], []
-
+    cv2.namedWindow('Chessboard Corners - Press any key for next', cv2.WINDOW_NORMAL)
     for fname in images_path_list:
         img = cv2.imread(fname)
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)

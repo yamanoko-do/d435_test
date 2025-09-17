@@ -11,3 +11,9 @@
 # 参考
 - [PointCloudGeneration-git](https://github.com/musimab/PointCloudGeneration)
 - [d435官方api+demo](https://dev.intelrealsense.com/docs/python2)
+
+
+# Piper 常用命令
+can_piper
+- 查找can：bash ./d435_test/robot_arm/piper/piper_sdk/piper_sdk/find_all_can_port.sh
+- 激活can：bash ./d435_test/robot_arm/piper/piper_sdk/piper_sdk/can_activate.sh can_piper 1000000 "3-3.4:1.0"

@@ -1,0 +1,9 @@
+# 忽略python缓存
+__pycache__/
+
+# 忽略相机标定图片
+/data/chessboard_images
+
+# 忽略眼在手外图片
+/data/eye2hand_images
+

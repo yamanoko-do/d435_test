@@ -117,7 +117,7 @@ class CameraD435:
     @staticmethod
     def get_intrinsics()->Tuple[np.ndarray,np.ndarray,np.ndarray,np.ndarray]:
         """
-        获取内参和畸变,不同参数的流，内参不同，记得修改
+        获取内参和畸变,不同分辨率参数的流对应的相机内参不同，记得修改
         Returns:
             tuple: 包含四个元素的元组，分别是：
                 - color_intrinsics (np.ndarray): rgb内参
@@ -165,9 +165,13 @@ class CameraD435:
 
         pipeline.stop()
         return color_intrinsics_,np.array(color_intrinsics.coeffs),depth_intrinsics_,np.array(depth_intrinsics.coeffs)
-    #获取外参
+    
+    
     @staticmethod
     def get_extrinsics_depth2rgb():
+        """
+        获取外参
+        """
         pipeline = rs.pipeline()
         config = rs.config()
         

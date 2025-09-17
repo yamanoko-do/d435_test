@@ -21,6 +21,7 @@ def calibrate_intrinsic(chessboard_picpath: str,chessboard_size: str,confirm: bo
 
     #加载拍摄的棋盘格照片
     images_path_list = glob.glob(chessboard_picpath+'/*.jpg')
+    print(images_path_list)
     img_ = cv2.imread(images_path_list[0])
     resolution=img_.shape[:2]
 
@@ -38,6 +39,7 @@ def calibrate_intrinsic(chessboard_picpath: str,chessboard_size: str,confirm: bo
             return int(match.group(1))
         return 0
     images_path_list.sort(key=sort_key)
+    cv2.namedWindow('Chessboard Corners,press anykey to next', cv2.WINDOW_NORMAL)
     for fname in images_path_list:
         #获取像素坐标
         img = cv2.imread(fname)
@@ -79,12 +81,14 @@ def calibrate_intrinsic(chessboard_picpath: str,chessboard_size: str,confirm: bo
 
 
     # 可选：对一张图像进行去畸变
+    
     if images_path_list:
         img = cv2.imread(images_path_list[0])
         h, w = img.shape[:2]
         newcameramtx, roi = cv2.getOptimalNewCameraMatrix(mtx, dist, (w, h), 1, (w, h))
         # 去畸变
         undistorted_img = cv2.undistort(img, mtx, dist, None, newcameramtx)
+        cv2.namedWindow('Undistorted Image,press q to quit', cv2.WINDOW_NORMAL)
         cv2.imshow('Undistorted Image,press q to quit', undistorted_img)
         cv2.waitKey(0)
         cv2.destroyAllWindows()

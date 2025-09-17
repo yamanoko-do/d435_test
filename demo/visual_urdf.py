@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 
 from pytransform3d.urdf import UrdfTransformManager
 
-file_path = "piper_description.urdf"
+file_path = "data/piper_description.urdf"
 
 try:
     # 打开文件并读取内容
