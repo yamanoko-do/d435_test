@@ -22,12 +22,14 @@ def pnp_Checkchessboard(chessboard_size,cam_intrinsic):
 
     # 配置 RealSense 相机
     cam=CameraD435()
-    cam.enable_stream(rs.stream.color, 1920,1080, rs.format.bgr8, 30)
+    cam.enable_stream(rs.stream.color, 1280,720, rs.format.bgr8, 30)
     cam.start()
 
     # 定义角点细化的终止条件
     criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
     axis_length = chessboard_size[2] * 3
+
+    cv2.namedWindow('RealSense - axis show', cv2.WINDOW_NORMAL)
     # 实时检测
     try:
         while True:
@@ -40,7 +42,7 @@ def pnp_Checkchessboard(chessboard_size,cam_intrinsic):
             ret, corners = cv2.findChessboardCorners(gray, chessboard_size[:2], None,cv2.CALIB_CB_FAST_CHECK)
             #ret, corners = cv2.findChessboardCornersSB(gray, chessboard_size[:2], None)
             end_time = time.time()
-            print(f"{end_time-start_time}")
+            #print(f"{end_time-start_time}")
             if ret:
                 # 角点细化
                 cv2.cornerSubPix(gray, corners, (11, 11), (-1, -1), criteria)

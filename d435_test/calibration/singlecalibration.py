@@ -21,7 +21,7 @@ def calibrate_intrinsic(chessboard_picpath: str,chessboard_size: str,confirm: bo
 
     #加载拍摄的棋盘格照片
     images_path_list = glob.glob(chessboard_picpath+'/*.jpg')
-    print(images_path_list)
+    #print(images_path_list)
     img_ = cv2.imread(images_path_list[0])
     resolution=img_.shape[:2]
 
@@ -44,7 +44,16 @@ def calibrate_intrinsic(chessboard_picpath: str,chessboard_size: str,confirm: bo
         #获取像素坐标
         img = cv2.imread(fname)
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        #ret, corners = cv2.findChessboardCorners(gray, chessboard_size[:2], None)
+        #ret, corners = cv2.findChessboardCornersSB(gray, chessboard_size[:2], cv2.CALIB_CB_EXHAUSTIVE | cv2.CALIB_CB_ACCURACY)
         ret, corners = cv2.findChessboardCorners(gray, chessboard_size[:2], None)
+
+        # 如果找到角点，进行亚像素精化
+        if ret:
+            # 定义亚像素迭代的终止条件（迭代次数或精度）
+            criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
+            # 精化角点位置（需要灰度图、初始角点、搜索窗口大小、死区、终止条件）
+            corners = cv2.cornerSubPix(gray, corners, (11, 11), (-1, -1), criteria)
         if ret:
             p_world_list.append(p_world)
             p_pixel_list.append(corners)
@@ -77,7 +86,7 @@ def calibrate_intrinsic(chessboard_picpath: str,chessboard_size: str,confirm: bo
     print(mtx.tolist())
     print("\n畸变系数 (Distortion Coefficients):")
     print(dist.tolist())
-    #dist=np.zeros((5, 1))
+    dist=np.zeros((5, 1))
 
 
     # 可选：对一张图像进行去畸变

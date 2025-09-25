@@ -124,7 +124,7 @@ def eye2hand_collect_piper(save_dir,pose_file_path):
 
     # 初始化相机
     cam=CameraD435()
-    cam.enable_stream(rs.stream.color, 1920,1080, rs.format.bgr8, 30)
+    cam.enable_stream(rs.stream.color, 1280,720, rs.format.bgr8, 30)
     cam.start()
 
     # 初始化piper

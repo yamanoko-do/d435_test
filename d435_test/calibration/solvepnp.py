@@ -48,6 +48,12 @@ def calibrate_extrinsic_bysolvepnp(chessboard_picpath: str, chessboard_size: Tup
         img = cv2.imread(fname)
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         ret, corners = cv2.findChessboardCorners(gray, chessboard_size[:2], None)
+        #ret, corners = cv2.findChessboardCornersSB(gray, chessboard_size[:2], cv2.CALIB_CB_EXHAUSTIVE | cv2.CALIB_CB_ACCURACY)
+        if ret:
+            # 定义亚像素迭代的终止条件（迭代次数或精度）
+            criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
+            # 精化角点位置（需要灰度图、初始角点、搜索窗口大小、死区、终止条件）
+            corners = cv2.cornerSubPix(gray, corners, (11, 11), (-1, -1), criteria)
         if ret:
             # 计算 PnP
             ret, rvec, tvec = cv2.solvePnP(p_world, corners, mtx, dist)

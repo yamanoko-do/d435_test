@@ -11,10 +11,9 @@ if __name__=="__main__":
     '''
     实时解算pnp
     '''
-    # chessboard_size = (9, 6, 21) #角点数即格子数减去1
+    # chessboard_size = (11, 8, 15) #角点数即格子数减去1
     # cam_intrinsic,cam_coe,_,_= CameraD435.get_intrinsics()
-    #pnp_Checkchessboard(chessboard_size=chessboard_size,cam_intrinsic=cam_intrinsic)
-
+    # pnp_Checkchessboard(chessboard_size=chessboard_size,cam_intrinsic=cam_intrinsic)
     '''
     相机内参标定
     '''
@@ -22,18 +21,19 @@ if __name__=="__main__":
     '''
     眼在手外标定
     '''
-    # # 1. 收集数据
+    # 1. 收集数据
     # save_dir="./data/eye2hand_images"
     # pose_file_path = save_dir+"/pose_data.txt"
     # eye2hand_collect_piper(save_dir=save_dir,pose_file_path=pose_file_path)
-    ## 2. 计算
-    #cam_intrinsic,_,_,_= CameraD435.get_intrinsics()
+    # 2. 计算
+    # cam_intrinsic,_,_,_= CameraD435.get_intrinsics()
     # print(cam_intrinsic)
-    cam_intrinsic,dist=calibrate_intrinsic(chessboard_picpath="./data/eye2hand_images",chessboard_size = (9, 6, 21),confirm=False)
+    cam_intrinsic,dist=calibrate_intrinsic(chessboard_picpath="./data/eye2hand_images",chessboard_size = (11, 8, 15),confirm=False)
+    
 
-    chessboard_picpath="./data/eye2hand_images"
-    pose_data_path = "./data/eye2hand_images/pose_data.txt"
-    eye2hand_calibration(cam_intrinsic=cam_intrinsic,chessboard_picpath=chessboard_picpath,pose_data_path=pose_data_path)
+    # chessboard_picpath="./data/eye2hand_images"
+    # pose_data_path = "./data/eye2hand_images/pose_data.txt"
+    # eye2hand_calibration(cam_intrinsic=cam_intrinsic,chessboard_picpath=chessboard_picpath,pose_data_path=pose_data_path)
     # # 3. 验证:尝试沿着相机z轴移动
     # dobot_chd = DobotSession(control_lib_path="./d435_test/robot_arm/dobot/Linux/x64/libDobotDll.so")
     # state,_,_=dobot_chd.ConnectDobot(portName=dobot_chd.SearchDobot()[0],baudrate=115200)
